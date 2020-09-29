@@ -1,0 +1,6 @@
+torch
+numpy
+gym
+pybullet
+sklearn
+git+https://github.com/ollenilsson19/QDgym.git#egg=QDgym

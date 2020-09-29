@@ -1,37 +1,68 @@
-This is the code for the MAP-Elites GA+PG Algorithm. The report detailing how it works can be found [here](https://gitlab.doc.ic.ac.uk/AIRL/students_projects/2019-2020/olle_nilsson/report)
+### Intro
+Based on original TD3 [paper](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-MAP-Elites implemetation from [here](https://github.com/resibots/pymap_elites)
+
+### Method
+ 
+
+
+### Results
+
+
+<p align="center">
+<img style="float: center;" src="results/progress_Walker2DBulletEnv-v0HalfCheetahBulletEnv-v0_pres.png" width="665">
+</p>
+
+<p align="center">
+<img style="float: center;" src="results/progress_AntBulletEnv-v0HopperBulletEnv-v0_pres.png" width="665">
+</p>
+
++ Walker
+<p align="center">
+<img style="float: center;" src="results/Walker_Animation_p.gif" width="665">
+</p>
+
++ Cheetah
+<p align="center">
+<img style="float: center;" src="results/Ch_Animation_p.gif" width="665">
+</p>
+
 
 ### How To Run the Code?
 
-Running the code requires installing `singularity`. Instructions for which can be found [here](https://sylabs.io/guides/3.5/user-guide/quick_start.html#quick-installation-steps). The easiest way is to consult the [AIRL WIKI](https://gitlab.doc.ic.ac.uk/AIRL/AIRL_WIKI) which containes detailed instructions for installing `singularity` on different systems. 
-To run the code locally first clone the repo:
-
-
 ```shell script
-git clone --recurse-submodules git@gitlab.doc.ic.ac.uk:AIRL/students_projects/2019-2020/olle_nilsson/MAP-Elites-GAPG.git
+git clone https://github.com/ollenilsson19/MAP-Elites-GAPG.git
+cd MAP-Elites-GAPG/
 ```
 
-#### Running in Sandbox
+#### Dependencies
 
-First build the sandbox image by:
+MAP-Elites GAPG requires to install:
 
++ Python=3.6
++ torch
++ numpy
++ gym
++ pybullet
++ sklearn
++ [QDgym](https://github.com/ollenilsson19/QDgym)
+
+these can be installed via the requirements file:
 ```shell script
-cd MAP-Elites-GAPG/singularity
-./start_container.sh
+pip3 install -r requirements.txt
 ```
-This will build an image that containes all the correct dependencies to run the code. Too see the dependencies you can inspect the `singularity.def` file located in `MAP-Elites-GAPG/singularity`.
 
 
-When inside the sandbox container the code can be run by:
+#### Running
+
+Withe the correct dependencies installed the code can be run by:
 
 ```shell script
-cd /git/sferes2/exp/MAP-Elites-GAPG
 python3 main.py
 ```
 `main.py` takes a range of arguments which is easiest to pass as a .txt by using the `--config_file` argument:
 
 
 ```shell script
-cd /git/sferes2/exp/MAP-Elites-GAPG
 python3 main.py --config_file path/to/config_file/config_file.txt
 ```
 A range of config files are included in the `configure_experiment` folder.
@@ -43,7 +74,7 @@ A range of config files are included in the `configure_experiment` folder.
 - QDHopper_config.txt
 
 
-The QDHalfCheetah_config.txt, QDWalker_config.txt, QDAnt_config.txt, QDHopper_config.txt are the configs used to run the experiments that are in the report. Although these configs are unlikely to run on your local computer as they are setup to run on resources avalable on the College HCP system. The local_config.txt is setup to run the code locally for debugging/testing so I recommed you use the below for testing the code locally:
+The QDHalfCheetah_config.txt, QDWalker_config.txt, QDAnt_config.txt, QDHopper_config.txt are the configs used to run the experiments that produced the results presented above. Although these configs are unlikely to run on your local computer as they are setup to run on resources avalable on the College HCP system. The local_config.txt is setup to run the code locally for debugging/testing so I recommed you use the below for testing the code locally:
 
 ```shell script
 python3 main.py --config_file configure_experiment/local_config.txt
@@ -98,50 +129,9 @@ Argument              |Comment
 --lr			            |# Learning rate local search
 
 
-If any argument is not specified in thr config.txt file the defauld will be used. The default values of all arguments can be found by inspecting the `main.py` file.
+If any argument is not specified in the config.txt file the default will be used. The default values of all arguments can be found by inspecting the `main.py` file.
 
-
-
-#### Running Final Images (Locally or on HPC)
-
-First build the final image by:
-
-```shell script
-cd MAP-Elites-GAPG/singularity
-./build_final_image.sh
-```
-This will build an image named `final_MAP-Elites-GAPG_$(date +%Y-%m-%d_%H_%M_%S).sif` that containes all the correct dependencies to run the code which can be run by:
-
-
-```shell script
-./final_MAP-Elites-GAPG_$(date +%Y-%m-%d_%H_%M_%S).sif
-```
-
-The config_file.txt is passed to the final image via the environmet variable `$PBS_ARRAY_INDEX` such that the config file passed will be the `configure_experiment/config_$PBS_ARRAY_INDEX.txt`. See the `singularity.def` file for how this is implemeted.
-
-To run locally you can thus create a config_file.txt that has a name of the form `config_some_interger.txt` and use:
-
-```shell script
-export PBS_ARRAY_INDEX some_integer
-```
-
-
-to pass the correct file to the final container. When running on the HPC use the normal array job method to specify the config file to use for each job in the array. A typical job file would look like shown in `example.job`. For optimal running use 
-
-```shell script
-KMP_SETTING="KMP_AFFINITY=granularity=fine,compact,1,0"
-KMP_BLOCKTIME=1
-
-export $KMP_SETTING
-export KMP_BLOCKTIME=$KMP_BLOCKTIME
-export OMP_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-```
-
-as specified in the example job file.
-
-If the CVT centroids that are requred by the specified configuration does not exist then it will be generated. I recommend you to generate this file locally before running on the HPC as otherwise the code will attempt to save the generated CVT by writing into the image which will cause an error. A range of pre-computed CVTs are available in the `CVT` folder.
-
+If the CVT centroids that are requred by the specified configuration does not exist then it will be automatically generated before the algoritrhm is launced. A range of pre-computed CVTs are available in the `CVT` folder.
 
 The best way to cenerate config files is to use the automated method implemeted in `generate_configs.py` file. This uses a base config file and generate configs by specifying the difference in argument values to achive the desired config. For example:
 
@@ -182,20 +172,6 @@ will generate config files enumerated from `config_1.txt` to `config_40.txt` usi
 ```shell script
 python3 generate_configs.py
 ```
-
- These configs runs each QDgym task for 10 seeds (exactly the configs used to get the results in the report). Using `#PBS -J 1-40` in the .job file will then run one job for each of these configs.
-
-#### Running Different Versions
-
-The different versions of the algorithm used in the report can be run as follows:
-
-- **MAP-Elites GA+PG**: Just use the master branch as is.
-- **MAP-Elites PG**: Use the master branch and set --proportion_evo=1.0 and omitt --gradient_op.
-- **MAP-Elites**: Use the `standard` branch.
-- **Simple_Population**: Use the `simple_population` branch.
-- **TD3 Archive**: Use the `TD3-MAP-Elites` branch.
-- **TD3 Archive Full**:Use the `TD3-MAP-Elites` branch and at the top of the `vectorized_env.py` set `FULL = TRUE`
-
 
 #### Outputs
 
@@ -238,8 +214,8 @@ The PyTorch network models are saved for all actors in the final archive under `
 
 
 
-Based on original TD3 [paper](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-MAP-Elites implemetation from [here](https://github.com/resibots/pymap_elites)
-### Bibtex
+
+### References
 
 ```
 @inproceedings{fujimoto2018addressing,
