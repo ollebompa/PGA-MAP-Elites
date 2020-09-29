@@ -1,12 +1,44 @@
 ### Intro
+MAP-Elites GAPG combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when evaluation solutions.
+
+This addresses some limitations of MAP-Elites by:
+
++ Incorporating gradient based search for increased search power.
+
+
++ Using an Action-Value function approximation that smooths act as implicit averaging or smoothing of behaviours, leading to learning robust behaviors that don’t require averaging over multiple evaluations.
+
+
+
+
+
 Based on original TD3 [paper](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-MAP-Elites implemetation from [here](https://github.com/resibots/pymap_elites)
 
-### Method
- 
 
 
 ### Results
 
+Evaluated on four stochastic tasks from [QDgym](https://github.com/ollenilsson19/QDgym) where the task is to discover ways to walk.
+
++ Behaviour: Feet contact time. 1000 niches. 
++ Fitness: Walking Distance
++ Controller: NN with ~ 20000 parameters.  
+
+
+<p align="center">
+<img style="float: center;" src="results/QD_env3.png" width="665">
+</p>
+
+The perfomance measure used are:
+
++ Coverage: The progression of the total number of solutions in the archive.  Coverage of 1000 is the maximum achievable in these tasks.
+
++ Mean Fitness: The progression of the mean of the fitness across all solutions in the archive.
+
++ Max Fitness: The progression of the overall highest fitness solution in the archive.
+
+
+The bottom plots show the progression of the max fitness averaged over 10 evaluations. This is used as a statistic for assessing the robustness of the single evaluation used to add solutions to the archive. Only a sigle evaluation is used to add solutions to the archive in the algorithm.
 
 <p align="center">
 <img style="float: center;" src="results/progress_Walker2DBulletEnv-v0HalfCheetahBulletEnv-v0_pres.png" width="665">
@@ -16,12 +48,13 @@ Based on original TD3 [paper](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-
 <img style="float: center;" src="results/progress_AntBulletEnv-v0HopperBulletEnv-v0_pres.png" width="665">
 </p>
 
-+ Walker
++ Typical progression of the archive for the QDWalker task:
 <p align="center">
 <img style="float: center;" src="results/Walker_Animation_p.gif" width="665">
 </p>
 
-+ Cheetah
++ Typical progression of the archive for the QDCheetah task:
+
 <p align="center">
 <img style="float: center;" src="results/Ch_Animation_p.gif" width="665">
 </p>
