@@ -12,7 +12,7 @@ This addresses some limitations of MAP-Elites by:
 
 
 
-Based on original TD3 [paper](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-MAP-Elites implemetation from [here](https://github.com/resibots/pymap_elites)
+Based on [TD3](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-MAP-Elites implemetation from [here](https://github.com/resibots/pymap_elites)
 
 
 
@@ -38,7 +38,7 @@ The perfomance measure used are:
 + Max Fitness: The progression of the overall highest fitness solution in the archive.
 
 
-The bottom plots show the progression of the max fitness averaged over 10 evaluations. This is used as a statistic for assessing the robustness of the single evaluation used to add solutions to the archive. Only a sigle evaluation is used to add solutions to the archive in the algorithm.
+The bottom plots show the progression of the max fitness averaged over 10 evaluations. This is used as a statistic for assessing the robustness of the single evaluation used to add solutions to the archive. Only a single evaluation is used to add solutions to the archive in the algorithm.
 
 <p align="center">
 <img style="float: center;" src="results/progress_Walker2DBulletEnv-v0HalfCheetahBulletEnv-v0_pres.png" width="665">
