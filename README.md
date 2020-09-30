@@ -119,7 +119,7 @@ A range of config files are included in the `configure_experiment` folder.
 - QDHopper_config.txt
 
 
-The QDHalfCheetah_config.txt, QDWalker_config.txt, QDAnt_config.txt, QDHopper_config.txt are the configs used to run the experiments that produced the results presented above. Although these configs are unlikely to run on your local computer as they are setup to run on resources avalable on the College HCP system. The local_config.txt is setup to run the code locally for debugging/testing so I recommed you use the below for testing the code locally:
+The QDHalfCheetah_config.txt, QDWalker_config.txt, QDAnt_config.txt, QDHopper_config.txt are the configs used to run the experiments that produced the results presented above. Although these configs are unlikely to run on your local computer as they are setup to run on resources avalable on a HCP system. The local_config.txt is setup to run the code locally for debugging/testing so I recommed you use the below for testing the code locally:
 
 ```shell script
 python3 main.py --config_file configure_experiment/local_config.txt
