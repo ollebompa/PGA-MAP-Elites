@@ -1,12 +1,12 @@
 ### Intro
-MAP-Elites GAPG combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when evaluation solutions.
+MAP-Elites GAPG combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when perfoming evaluation of solutions.
 
 This addresses some limitations of MAP-Elites by:
 
 + Incorporating gradient based search for increased search power.
 
 
-+ Using an Action-Value function approximation that smooths act as implicit averaging or smoothing of behaviours, leading to learning robust behaviors that don’t require averaging over multiple evaluations.
++ Using an Action-Value function approximation that smooths the target policy and acts as an implicit averaging or smoothing of behaviours, leading to learning behaviours that don’t converge to narrow peaks in the fitness landscape and therefore are less sensitive to noise/stochasticity.
 
 
 
