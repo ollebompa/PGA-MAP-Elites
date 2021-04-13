@@ -1,6 +1,10 @@
 ### Intro
 PGA-MAP-Elites combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when perfoming evaluation of solutions.
 
+<p align="center">
+<img style="float: center;" src="results/PGA-MAP-Elites-v2-CMYK.png" width="665">
+</p>
+
 This addresses some limitations of MAP-Elites by:
 
 + Incorporating gradient based search for increased search power.
@@ -26,7 +30,7 @@ Evaluated on four stochastic tasks from [QDgym](https://github.com/ollenilsson19
 
 
 <p align="center">
-<img style="float: center;" src="results/QD_envs.pdf" width="665">
+<img style="float: center;" src="results/QD_envs.png" width="665">
 </p>
 
 The perfomance measure used are:
@@ -43,14 +47,14 @@ The bottom plots show the progression of the max fitness averaged over 10 evalua
 Each experiment is repeated 20 times with different random seeds and the solid line displays the median and the shaded area is bounded by the first and third quartiles.
 
 <p align="center">
-<img style="float: center;" src="results/maps.pdf" width="665">
+<img style="float: center;" src="results/maps.png" width="665">
 </p>
 
 
 + Typical final archives for QDHalfCheetah and QDWalker:
 
 <p align="center">
-<img style="float: center;" src="results/density_all.pdf" width="665">
+<img style="float: center;" src="results/density_all.png" width="665">
 </p>
 
 
@@ -58,7 +62,7 @@ Each experiment is repeated 20 times with different random seeds and the solid l
 + Cumulative fitness density plots. These represent the likely number of solutions found in a fitness range for a given run of the algorithm. Calculated as the average over 20 seeds:
 
 <p align="center">
-<img style="float: center;" src="results/density_all.pdf" width="665">
+<img style="float: center;" src="results/density_all.png" width="665">
 </p>
 
 
