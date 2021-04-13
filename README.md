@@ -1,5 +1,5 @@
 ### Intro
-MAP-Elites GAPG combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when perfoming evaluation of solutions.
+PGA-MAP-Elites combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when perfoming evaluation of solutions.
 
 This addresses some limitations of MAP-Elites by:
 
@@ -20,68 +20,59 @@ Based on original TD3 [paper](https://arxiv.org/pdf/1802.09477.pdf) and the CVT-
 
 Evaluated on four stochastic tasks from [QDgym](https://github.com/ollenilsson19/QDgym) where the task is to discover ways to walk.
 
-+ Behaviour: Feet contact time. 1000 niches. 
++ Behaviour: Feet contact time.
 + Fitness: Walking Distance
 + Controller: NN with ~ 20000 parameters.  
 
 
 <p align="center">
-<img style="float: center;" src="results/QD_env3.png" width="665">
+<img style="float: center;" src="results/QD_envs.pdf" width="665">
 </p>
 
 The perfomance measure used are:
 
-+ Coverage: The progression of the total number of solutions in the archive.  Coverage of 1000 is the maximum achievable in these tasks.
++ QD-Score: The progression of the sum of fitness in the archive.
 
-+ Mean Fitness: The progression of the mean of the fitness across all solutions in the archive.
++ Coverage: The progression of the total number of solutions in the archive.  
 
 + Max Fitness: The progression of the overall highest fitness solution in the archive.
 
 
 The bottom plots show the progression of the max fitness averaged over 10 evaluations. This is used as a statistic for assessing the robustness of the single evaluation used to add solutions to the archive. Only a sigle evaluation is used to add solutions to the archive in the algorithm.
 
-Each experiment is repeated 10 times with different random seeds and the solid line displays the median and the shaded area is bounded by the first and third quartiles.
+Each experiment is repeated 20 times with different random seeds and the solid line displays the median and the shaded area is bounded by the first and third quartiles.
 
 <p align="center">
-<img style="float: center;" src="results/progress_Walker2DBulletEnv-v0HalfCheetahBulletEnv-v0_pres.png" width="665">
+<img style="float: center;" src="results/maps.pdf" width="665">
 </p>
+
+
++ Typical final archives for QDHalfCheetah and QDWalker:
 
 <p align="center">
-<img style="float: center;" src="results/progress_AntBulletEnv-v0HopperBulletEnv-v0_pres.png" width="665">
+<img style="float: center;" src="results/density_all.pdf" width="665">
 </p>
 
-+ Typical progression of the archive for the QDWalker task:
-<p align="center">
-<img style="float: center;" src="results/Walker_Animation_p.gif" width="665">
-</p>
 
-+ Typical progression of the archive for the QDCheetah task:
+
++ Cumulative fitness density plots. These represent the likely number of solutions found in a fitness range for a given run of the algorithm. Calculated as the average over 20 seeds:
 
 <p align="center">
-<img style="float: center;" src="results/Ch_Animation_p.gif" width="665">
+<img style="float: center;" src="results/density_all.pdf" width="665">
 </p>
 
-+ Cumulative fitness density plots. These represent the likely number of solutions found in a fitness range for a given run of the algorithm. Calculated as the average over 10 seeds. The vertical line represents the median:
-
-<p align="center">
-<img style="float: center;" src="results/progress_Walker2DBulletEnv-v0HalfCheetahBulletEnv-v0_pres_cum.png" width="665">
-</p>
-
-<p align="center">
-<img style="float: center;" src="results/progress_AntBulletEnv-v0HopperBulletEnv-v0_pres_cum.png" width="665">
-</p>
 
 
 ### How To Run the Code?
 
 ```shell script
-git clone https://github.com/ollenilsson19/MAP-Elites-GAPG.git
-cd MAP-Elites-GAPG/
+git clone https://github.com/ollenilsson19/PGA-MAP-Elites.git
+cd PGA-MAP-Elites/
 ```
 
 #### Dependencies
 
-MAP-Elites GAPG requires to install:
+PGA-MAP-Elites requires to install:
 
 + Python=3.6
 + torch
@@ -99,7 +90,7 @@ pip3 install -r requirements.txt
 
 #### Running
 
-Withe the correct dependencies installed the code can be run by:
+With the correct dependencies installed the code can be run by:
 
 ```shell script
 python3 main.py
@@ -176,7 +167,7 @@ Argument              |Comment
 
 If any argument is not specified in the config.txt file the default will be used. The default values of all arguments can be found by inspecting the `main.py` file.
 
-If the CVT centroids that are requred by the specified configuration does not exist then it will be automatically generated before the algoritrhm is launced. A range of pre-computed CVTs are available in the `CVT` folder.
+If the CVT centroids that are requred by the specified configuration does not exist then it will be automatically generated before the algorithm is launced. A range of pre-computed CVTs are available in the `CVT` folder.
 
 The best way to cenerate config files is to use the automated method implemeted in `generate_configs.py` file. This uses a base config file and generate configs by specifying the difference in argument values to achive the desired config. For example:
 
@@ -220,7 +211,7 @@ python3 generate_configs.py
 
 #### Outputs
 
-The output of the code will be saved in the location specified by the `--save_path` argument. The output is three main files. The progress file, the actors file and archive files. The log file takes is saved under `args.save_path/progress_{file_name}.dat` with `file_name = MAP-Elites-GAPG_{args.env}_{args.seed}_{args.dim_map}`. After each batch the progress file will log in each column:
+The output of the code will be saved in the location specified by the `--save_path` argument. The output is three main files. The progress file, the actors file and archive files. The log file takes is saved under `args.save_path/progress_{file_name}.dat` with `file_name = PGA-MAP-Elites_{args.env}_{args.seed}_{args.dim_map}`. After each batch the progress file will log in each column:
 
 - Nr of Evaluations
 - Covarage 
