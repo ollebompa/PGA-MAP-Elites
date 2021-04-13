@@ -47,7 +47,7 @@ The bottom plots show the progression of the max fitness averaged over 10 evalua
 Each experiment is repeated 20 times with different random seeds and the solid line displays the median and the shaded area is bounded by the first and third quartiles.
 
 <p align="center">
-<img style="float: center;" src="results/progress_all.png" width="665">
+<img style="float: center;" src="results/progress_all.png" width="965">
 </p>
 
 
