@@ -33,6 +33,11 @@ Evaluated on four stochastic tasks from [QDgym](https://github.com/ollenilsson19
 <img style="float: center;" src="results/QD_envs.png" width="665">
 </p>
 
+
+Here is a few examples of produced behaviours:
+
+[![](http://img.youtube.com/vi/-rvJrOa0scc/0.jpg)](http://www.youtube.com/watch?v=-rvJrOa0scc "")
+
 The perfomance measure used are:
 
 + QD-Score: The progression of the sum of fitness in the archive.
