@@ -83,7 +83,7 @@ PGA-MAP-Elites requires to install:
 + gym==0.15.4
 + pybullet==3.0.8
 + Cython==0.29.21
-+ sklearn==0.21.3
++ scikit-learn==0.21.3
 + [QDgym](https://github.com/ollenilsson19/QDgym)
 
 these can be installed via the requirements file:
@@ -123,6 +123,12 @@ The QDHalfCheetah_config.txt, QDWalker_config.txt, QDAnt_config.txt, QDHopper_co
 python3 main.py --config_file configure_experiment/local_config.txt
 ```
 
+If you get "Too many open files" errors, this has to do with limitations imposed by your os and is not an error related to the code. Depending on your system, this may be solved by:
+
+```shell script
+ulimit -n 4000
+```
+
 The config file passed can be used to pass the following arguments:
 
 
@@ -134,7 +140,7 @@ Argument              |Comment
 --save_path           |# Path where to save results
 --dim_map             |# Dimentionality of behaviour space
 --n_niches            |# Nr. of niches/cells of behaviour
---n_species           |# Nr. of species/cells in species archive (The species archive is disabled in the GECCO paper by setting n_species=1. See: ["What is the Species Archive?"](###what-is-the-species-archive-?)
+--n_species           |# Nr. of species/cells in species archive (The species archive is disabled in the GECCO paper by setting n_species=1. See: ["What is the Species Archive?"](###what-is-the-species-archive?)
 --max_evals           |# Nr. of evaluations (I)
 --mutation_op         |# Mutation operator to use (Set to None in GECCO paper)
 --crossover_op        |# Crossover operator to use (Set to iso_dd aka directional variation in GECCO paper which we implement as a mutation and crossover in one)
