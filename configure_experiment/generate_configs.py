@@ -61,20 +61,21 @@ if __name__ == "__main__":
     base_config = "QDAnt_config.txt"
 
     variables_1 = ["env", "seed", "dim_map", "n_niches", "max_evals", "neurons_list"]
-    ranges_1 = [["QDAntBulletEnv-v0"], range(10), [4], [1000], [1000000], ["128 128"]]
+    ranges_1 = [["QDAntBulletEnv-v0"], range(20), [4], [1296], [1000000], ["128 128"]]
     param_grid_1 = generate_grid_configs(variables_1, ranges_1)
 
     variables_2 = ["env", "seed", "dim_map", "n_niches", "max_evals", "neurons_list"]
-    ranges_2 = [["QDWalker2DBulletEnv-v0"], range(10), [2], [1000], [1000000], ["128 128"]]
+    ranges_2 = [["QDWalker2DBulletEnv-v0"], range(20), [2], [1024], [1000000], ["128 128"]]
     param_grid_2 = generate_grid_configs(variables_2, ranges_2)
 
     variables_3 = ["env", "seed", "dim_map", "n_niches", "max_evals", "neurons_list"]
-    ranges_3 = [["QDHalfCheetahBulletEnv-v0"], range(10), [2], [1000], [1000000], ["128 128"]]
+    ranges_3 = [["QDHalfCheetahBulletEnv-v0"], range(20), [2], [1024], [1000000], ["128 128"]]
     param_grid_3 = generate_grid_configs(variables_3, ranges_3)
 
     variables_4 = ["env", "seed", "dim_map", "n_niches", "max_evals", "neurons_list"]
-    ranges_4 = [["QDHopperBulletEnv-v0"], range(10), [1], [1000], [1000000], ["128 128"]]
+    ranges_4 = [["QDHopperBulletEnv-v0"], range(20), [1], [1000], [1000000], ["128 128"]]
     param_grid_4 = generate_grid_configs(variables_4, ranges_4)
+
 
 
     configs =  param_grid_1 + param_grid_2 + param_grid_3 + param_grid_4
@@ -84,6 +85,6 @@ if __name__ == "__main__":
 
     base = get_base_conf(base_config)
     for i, conf in enumerate(configs):
-        name = f"config_{i+1 + }"
+        name = f"config_{i+1 + 80}"
         write_conf_file(base, conf, name)
 

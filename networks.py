@@ -56,8 +56,6 @@ class Actor(nn.Module):
 		
 		self.type = None
 		self.id = None
-		self.parent_1 = None
-		self.parent_2 = None
 		self.parent_1_id = None
 		self.parent_2_id = None
 		self.novel = None
@@ -102,6 +100,21 @@ class Actor(nn.Module):
 			self.weight_init_fn(m.weight)
 		if isinstance(m, nn.LayerNorm):
 			pass
+
+
+	def disable_grad(self):
+		for param in self.parameters():
+			param.requires_grad = False
+
+	
+	def enable_grad(self):
+		for param in self.parameters():
+			param.requires_grad = True
+
+
+	def return_copy(self):
+		return copy.deepcopy(self)
+
 	
 
 
@@ -142,6 +155,10 @@ class CriticNetwork(nn.Module):
 		q1 = self.l3(q1)
 		return q1
 
+	
+	def save(self, filename):
+		torch.save(self.state_dict(), filename)
+
 
 
 class Critic(object):
@@ -178,16 +195,15 @@ class Critic(object):
 	def train(self, archive, replay_buffer, nr_of_steps, batch_size=256):
 		# check if found new species
 		diff = set(archive.keys()) - self.actors_set
-		print(diff)
 		for desc in diff:
 			# add new species to the critic training pool
-			print(desc)
 			self.actors_set.add(desc)
 			new_actor = archive[desc].x
 			a = copy.deepcopy(new_actor)
 			for param in a.parameters():
 				param.requires_grad = True
 			a.parent_1_id = new_actor.id
+			a.parent_2_id = None
 			a.type = "critic_training"
 			target = copy.deepcopy(a)
 			optimizer = torch.optim.Adam(a.parameters(), lr=3e-4)
@@ -250,9 +266,10 @@ class Critic(object):
 		return critic_loss
 
 
+
 	def save(self, filename):
-		torch.save(self.critic.state_dict(), filename + "_critic")
-		torch.save(self.critic_optimizer.state_dict(), filename + "_critic_optimizer")
+		torch.save(self.critic.state_dict(), filename)
+		torch.save(self.critic_optimizer.state_dict(), filename + "_optimizer")
 		
 
 	def load(self, filename):

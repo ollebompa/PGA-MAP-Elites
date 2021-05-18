@@ -1,8 +1,9 @@
 --env=QDWalker2DBulletEnv-v0
+--save_path=test
 --seed=0
 --dim_map=2
---n_niches=1000
---n_species=2
+--n_niches=1024
+--n_species=1
 --max_evals=100
 --mutation_op=None
 --crossover_op=iso_dd

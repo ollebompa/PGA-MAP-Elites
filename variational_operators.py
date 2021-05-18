@@ -29,7 +29,7 @@ def parallel_worker(process_id,
                     ):
 
     '''
-    Function that runs the paralell processes for the variation operator
+    Function that runs the parallel processes for the variation operator
     Parameters:
             process_id (int): ID of the process so it can be identified
             actors_train_in_queue (Queue object): queue for incoming actors
@@ -46,6 +46,7 @@ def parallel_worker(process_id,
             actor_z = copy.deepcopy(actor_x)
             actor_z.type = "grad"
             actor_z.parent_1_id = actor_x.id
+            actor_z.parent_2_id = None
             # Enable grad
             for param in actor_z.parameters():
                 param.requires_grad = True
@@ -68,7 +69,7 @@ def parallel_worker(process_id,
 
 class VariationalOperator(object):
     """
-    A class for applying the variation operator in paralell.
+    A class for applying the variation operator in parallel.
     """
     def __init__(self,
                 actor_fn,
@@ -101,8 +102,8 @@ class VariationalOperator(object):
         else:
             self.mutation_op = False
 
-        print(self.mutation_op)
-        print(self.crossover_op)
+        print(f"Mutation operator: {self.mutation_op}")
+        print(f"Crossover operator: {self.crossover_op}")
         
         self.learning_rate = learning_rate
         self.max = max_gene
@@ -119,14 +120,14 @@ class VariationalOperator(object):
         self.n_processes = num_cpu
         self.actors_train_in_queue = Queue()
         self.actors_train_out_queue = Queue()
-        # Setup paralell processes
+        # Setup parallel processes
         self.processes = [Process(target=parallel_worker, 
                                     args=(process_id,
                                             self.actors_train_in_queue,
                                             self.actors_train_out_queue,
                                             self.learning_rate,
                                             CloudpickleWrapper(self.actor_fn))) for process_id in range(self.n_processes)]
-        # Start paralell processes
+        # Start parallel processes
         for p in self.processes:
             p.daemon = True
             p.start()
@@ -198,7 +199,6 @@ class VariationalOperator(object):
             rand_grad = np.random.randint(len(keys), size=(batch_size - int(batch_size * proportion_evo)))
             for n in range(0, len(rand_grad)):
                 actors_x_grad += [archive[keys[rand_grad[n]]]]
-
             # apply PG variation
             actors_z_grad = [None] * len(actors_x_grad)
             for n in range(len(actors_x_grad)):
@@ -227,6 +227,7 @@ class VariationalOperator(object):
                 actor_z_state_dict = self.mutation(actor_z_state_dict, mutation_op)
         elif mutation_op:
             actor_z.parent_1_id = actor_x.id
+            actor_z.parent_2_id = None
             actor_z_state_dict = self.mutation(actor_x.state_dict(), mutation_op)
         actor_z.load_state_dict(actor_z_state_dict)
         return actor_z

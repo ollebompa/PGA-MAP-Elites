@@ -1,6 +1,7 @@
-torch
-numpy
-gym
-pybullet
-sklearn
+torch==1.7.1
+numpy==1.19.5
+gym==0.15.4
+pybullet==3.0.8
+Cython==0.29.21
+sklearn==0.21.3
 git+https://github.com/ollenilsson19/QDgym.git#egg=QDgym

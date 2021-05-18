@@ -27,9 +27,8 @@ import pickle
 
 
 
-
 class ReplayBuffer(object):
-    def __init__(self, state_dim, action_dim, max_size=int(1e6)):
+    def __init__(self, state_dim, action_dim, max_size=int(1e6), load=False):
         self.max_size = max_size
         self.ptr = 0
         self.size = 0
@@ -90,17 +89,16 @@ class ReplayBuffer(object):
         return replay_buffer
         
 
-
 class Individual:
     _ids = count(0)
     def __init__(self, x, desc, fitness, centroid=None):
         x.id = next(self._ids)
+        Individual.current_id = x.id
         self.x = x
         self.desc = desc
         self.fitness = fitness
         self.centroid = centroid
         self.novelty = None
-
 
 
 def add_to_archive(s, centroid, archive, kdt, main=True):
@@ -121,24 +119,12 @@ def add_to_archive(s, centroid, archive, kdt, main=True):
         archive[n] = s
         if main:
             s.x.novel = True
+            s.x.delta_f = None
         return 1
-
-
-# def update_novelty(archive, k=5):
-#     s = list(archive.values())
-#     descs = np.zeros((len(archive), len(s[0].desc)))
-#     for idx, value in enumerate(s):
-#     	descs[idx,:] = value.desc
-#     kdt_novelty = KDTree(descs, leaf_size=30, metric='euclidean')
-#     novelty = np.sum(kdt_novelty.query(descs, k)[0], axis=1)
-#     for idx, value in enumerate(s):
-#         value.novelty =  novelty[idx]
-#     return archive
 
 
 def __centroids_filename(k, dim): 
     return 'CVT/centroids_' + str(k) + '_' + str(dim) + '.dat'
-
 
 
 def write_centroids(centroids):
@@ -150,7 +136,6 @@ def write_centroids(centroids):
             for item in p:
                 f.write(str(item) + ' ') 
             f.write('\n')
-
 
 
 def cvt(k, dim, samples, cvt_use_cache=True):
@@ -181,8 +166,8 @@ def cvt(k, dim, samples, cvt_use_cache=True):
 def make_hashable(array):
     return tuple(map(float, array))
 
-# format: fitness, centroid, desc, genome \n
-# fitness, centroid, desc and x are vectors
+# format: fitness, centroid, desc, 
+# fitness, centroid, desc and are vectors
 def save_archive(archive, gen, archive_name, save_path, save_models=False):
     def write_array(a, f):
         for i in a:
@@ -194,6 +179,7 @@ def save_archive(archive, gen, archive_name, save_path, save_models=False):
             write_array(k.centroid, f)
             write_array(k.desc, f)
             f.write(str(k.x.id) + ' ')
-            f.write("\n")
+            f.write("\n") 
             if save_models:
                 k.x.save(f"{save_path}/models/{archive_name}_actor_" + str(k.x.id))
+       
