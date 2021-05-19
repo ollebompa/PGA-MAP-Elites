@@ -229,7 +229,7 @@ python3 generate_configs.py
 
 ### Replicating the GECCO Paper Results
 
-The different versions of the algorithm used in the paper can be via the supplied singularity containers. To run these first install singularity (https://github.com/sylabs/singularity/blob/master/INSTALL.md).
+The different versions of the algorithm used in the paper can run be via the supplied singularity containers. To run these first install singularity (https://github.com/sylabs/singularity/blob/master/INSTALL.md).
 
 To run a container do:
 
@@ -244,16 +244,13 @@ export PBS_ARRAY_INDEX some_integer
 ```
 To replicate the results from the paper run the following containers and configs:
 
-- **PGA-MAP-Elites**: PGA-MAP-Elites.sif `config_1.txt` - `config_80.txt`
-- **PGA-MAP-Elites PG only version**: PGA-MAP-Elites.sif `config_81.txt` - `config_160.txt`
-- **MAP-Elites**: MAP-Elites.sif `config_1.txt` - `config_80.txt`
-- **TD3 w. Archive**: TD3-MAP-Elites-Archive.sif `config_1.txt` - `config_80.txt`
-- **MAP-Elites-ES**: MAP-Elites-ES.sif `config_1.txt` - `config_80.txt`
+- **PGA-MAP-Elites**: [PGA-MAP-Elites.sif](https://drive.google.com/file/d/1CSR00JVxpDhszh2rnwwO2E2ztWCBtEKe/view?usp=sharing) `config_1.txt` - `config_80.txt`
+- **PGA-MAP-Elites PG only version**: [PGA-MAP-Elites.sif](https://drive.google.com/file/d/1CSR00JVxpDhszh2rnwwO2E2ztWCBtEKe/view?usp=sharing) `config_81.txt` - `config_160.txt`
+- **MAP-Elites**: [MAP-Elites.sif](https://drive.google.com/file/d/1E2mRRmq_rLSX7CbtYMDQ2bkQ7RWgGEct/view?usp=sharing) `config_1.txt` - `config_80.txt`
+- **TD3 w. Archive**: [TD3-MAP-Elites-Archive.sif](https://drive.google.com/file/d/1DaTDYouIA2F5aQ5C-oBdaj4pB7SACDrv/view?usp=sharing) `config_1.txt` - `config_80.txt`
+- **MAP-Elites-ES**:[MAP-Elites-ES.sif](https://drive.google.com/file/d/1EzoKNpQC8MpBvG7d-7IgkHh-zn8KsRaj/view?usp=sharing) `config_1.txt` - `config_80.txt`
 
 The QD-RL container will not be made public as the authors of QD-RL are yet to officially release their code.
-
-NOTE:
-We will supply containerized environments for download ASAP but we are yet to figure out how to host these. In the meantime contact me on olle.nilsson19@imperial.ac.uk or open an issue if you need the container images.
 
 
 ### Settings for Running PGA-MAP-Elites
