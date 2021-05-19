@@ -242,6 +242,25 @@ When the container executes the config to run is decided by the value of the env
 ```shell script
 export PBS_ARRAY_INDEX some_integer
 ```
+
+More specifically, runnig a container will invoke the following commands to create directories for saving results and launch the algorithm:
+
+```shell script
+CURPATH=$(pwd)
+if [ ! -d ./results ]; then
+    mkdir results
+fi
+
+cd /git/sferes2/exp/PGA-MAP-Elites/
+PATHNAME=PGA-MAP-Elites/$(date +%Y-%m-%d_%H_%M_%S)_$$
+mkdir -p $CURPATH/results/$PATHNAME
+mkdir $CURPATH/results/$PATHNAME/models
+mkdir $CURPATH/results/$PATHNAME/monitoring  
+cp configure_experiment/config_$PBS_ARRAY_INDEX.txt $CURPATH/results/$PATHNAME/                 
+python3 main.py --save_path $CURPATH/results/$PATHNAME/ \
+                --config_file configure_experiment/config_$PBS_ARRAY_INDEX.txt
+```
+
 To replicate the results from the paper run the following containers and configs:
 
 - **PGA-MAP-Elites**: [PGA-MAP-Elites.sif](https://drive.google.com/file/d/1CSR00JVxpDhszh2rnwwO2E2ztWCBtEKe/view?usp=sharing) `config_1.txt` - `config_80.txt`
