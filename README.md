@@ -229,7 +229,7 @@ python3 generate_configs.py
 
 ### Replicating the GECCO Paper Results
 
-The different versions of the algorithm used in the paper can be via the supplied singularity containers. To run these first install singularity (https://github.com/sylabs/singularity/blob/master/INSTALL.md).
+The different versions of the algorithm used in the paper can run be via the supplied singularity containers. To run these first install singularity (https://github.com/sylabs/singularity/blob/master/INSTALL.md).
 
 To run a container do:
 
@@ -242,18 +242,36 @@ When the container executes the config to run is decided by the value of the env
 ```shell script
 export PBS_ARRAY_INDEX some_integer
 ```
+
+More specifically, running a container will invoke the following commands to create directories for saving results and launch the algorithm:
+
+```shell script
+CURPATH=$(pwd)
+# create subfolder called results in the current directory
+if [ ! -d ./results ]; then
+    mkdir results
+fi
+
+cd /git/sferes2/exp/PGA-MAP-Elites/ # Location of code in container
+# Create unique subdirectory within results where output will be written to
+PATHNAME=PGA-MAP-Elites/$(date +%Y-%m-%d_%H_%M_%S)_$$ 
+mkdir -p $CURPATH/results/$PATHNAME
+mkdir $CURPATH/results/$PATHNAME/models
+mkdir $CURPATH/results/$PATHNAME/monitoring  
+cp configure_experiment/config_$PBS_ARRAY_INDEX.txt $CURPATH/results/$PATHNAME/ # Copy config file of experiment to results                
+python3 main.py --save_path $CURPATH/results/$PATHNAME/ \
+                --config_file configure_experiment/config_$PBS_ARRAY_INDEX.txt # Launch algorithm
+```
+
 To replicate the results from the paper run the following containers and configs:
 
-- **PGA-MAP-Elites**: PGA-MAP-Elites.sif `config_1.txt` - `config_80.txt`
-- **PGA-MAP-Elites PG only version**: PGA-MAP-Elites.sif `config_81.txt` - `config_160.txt`
-- **MAP-Elites**: MAP-Elites.sif `config_1.txt` - `config_80.txt`
-- **TD3 w. Archive**: TD3-MAP-Elites-Archive.sif `config_1.txt` - `config_80.txt`
-- **MAP-Elites-ES**: MAP-Elites-ES.sif `config_1.txt` - `config_80.txt`
+- **PGA-MAP-Elites**: [PGA-MAP-Elites.sif](https://drive.google.com/file/d/1CSR00JVxpDhszh2rnwwO2E2ztWCBtEKe/view?usp=sharing) `config_1.txt` - `config_80.txt`
+- **PGA-MAP-Elites PG only version**: [PGA-MAP-Elites.sif](https://drive.google.com/file/d/1CSR00JVxpDhszh2rnwwO2E2ztWCBtEKe/view?usp=sharing) `config_81.txt` - `config_160.txt`
+- **MAP-Elites**: [MAP-Elites.sif](https://drive.google.com/file/d/1E2mRRmq_rLSX7CbtYMDQ2bkQ7RWgGEct/view?usp=sharing) `config_1.txt` - `config_80.txt`
+- **TD3 w. Archive**: [TD3-MAP-Elites-Archive.sif](https://drive.google.com/file/d/1DaTDYouIA2F5aQ5C-oBdaj4pB7SACDrv/view?usp=sharing) `config_1.txt` - `config_80.txt`
+- **MAP-Elites-ES**:[MAP-Elites-ES.sif](https://drive.google.com/file/d/1EzoKNpQC8MpBvG7d-7IgkHh-zn8KsRaj/view?usp=sharing) `config_1.txt` - `config_80.txt`
 
 The QD-RL container will not be made public as the authors of QD-RL are yet to officially release their code.
-
-NOTE:
-We will supply containerized environments for download ASAP but we are yet to figure out how to host these. In the meantime contact me on olle.nilsson19@imperial.ac.uk or open an issue if you need the container images.
 
 
 ### Settings for Running PGA-MAP-Elites
