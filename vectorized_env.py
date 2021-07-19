@@ -20,7 +20,7 @@ def parallel_critic(replay_fn,
                     random_init):
 
     '''
-    Function that runs the  processes for the global search
+    Function that runs the  processes for the critic training
     Parameters:
         replay_fn: function that inililises the replay buffer
         critic_fn: function that inililises the critc
@@ -54,10 +54,10 @@ def parallel_critic(replay_fn,
             if remote.poll():
                 archive = remote.recv()
 
-            # start global search
+            # start critic training
             if replay_buffer.additions > random_init * 0.9 and archive and not waiting: # hack as well
                 t1 = time.time()
-                # global search
+                # train critic
                 critic_loss = critic.train(archive, replay_buffer, nr_of_steps, batch_size=batch_size)
                 train_time = time.time() - t1
                 waiting = True

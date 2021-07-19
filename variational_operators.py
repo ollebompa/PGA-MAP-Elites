@@ -29,7 +29,7 @@ def parallel_worker(process_id,
                     ):
 
     '''
-    Function that runs the parallel processes for the variation operator
+    Function that runs the parallel processes for the PG variation operator
     Parameters:
             process_id (int): ID of the process so it can be identified
             actors_train_in_queue (Queue object): queue for incoming actors
