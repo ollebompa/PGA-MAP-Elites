@@ -1,5 +1,5 @@
 ## Intro
-This is the code for the PGA-MAP-Elites algorithm as submitted to GECCO '21. The paper can be found [here](https://github.com/ollenilsson19/PGA-MAP-Elites/tree/master/paper/PGA_MAP_Elites_GECCO.pdf).
+This is the code for the PGA-MAP-Elites algorithm as published at the Genetic and Evolutionary Computation Conference (GECCO) in 2021 where it recived a Best Paper award [](https://gecco-2021.sigevo.org/Best-Paper-Awards). The paper can be found [here](https://github.com/ollenilsson19/PGA-MAP-Elites/tree/master/paper/PGA_MAP_Elites_GECCO.pdf).
 
 PGA-MAP-Elites combines MAP-Elites and Actor-Critic DRL by training a critic network off-policy based on experience collected when evaluating solutions.
 
